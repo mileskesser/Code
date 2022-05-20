@@ -1,0 +1,92 @@
+<!-- index.hbs -->
+<h1 align="center">Donors Page</h1>
+<p align="center">Displaying all registered donors</p>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Create a table --}}
+<table id="donor-table" border="3" cellpadding="5" align="center">
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {{!-- For each row, print the donor_id, name, email, and total_donated --}}
+        {{#each data}}
+        <tr data-value={{this.donor_id}}>
+            <td align="center">{{this.donor_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td align="right">{{this.total_donated}}</td>
+   
+            <td><button onclick="deleteDonor({{this.donor_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_donor.js"></script>
+
+{{!-- Add donor form --}}
+<h2 align="center">ADD DONOR</h2>
+<p align="center">To add a new donor, enter their information below and click <strong>Submit!</strong></p>
+<form id="add-donor-form" method="POST" action="/add-donor-form" align="center">
+
+    <label for="input-name">Name: </label>
+    <input type="text" name="input-name" id="input-name">
+    
+    <label for="input-email">Email: </label>
+    <input type="text" name="input-email" id="input-email">
+
+    <label for="input-donated">Total Donated: </label>
+    <input type="number" name="input-donated" id="input-donated">
+
+    <input type="submit" value="Add">
+</form>
+
+{{!-- Search donor form --}}
+<h2 align="center" >SEARCH FOR A DONOR</h2>
+<p align="center" >Search for a donor by entering their name below.</p>
+<form id="search-person-html" method='GET' action='/' align="center">
+
+    <label for="input-name">Name: </label>
+    <input type="text" name="name" id="input-name-html-search">
+    
+    <input type="submit" value="Search">
+    <a href='/'><button>Reset</button></a>
+</form>
+
+
+<h2 align="center">UPDATE DONOR DETAILS</h2>
+<p align="center">To update donors data, select a donor id from the drop-down menu and 
+    enter the new data.</p>
+<form id="update-donor" method="POST" action="/update-donor" align="center">
+  <label for="donor_id">Select a donor ID: </label>
+  <select name="donor_id" id="update_donor_select" onChange="formFill()" required>
+    <option value="donor">Donor ID</option>
+    {{#each data}}
+    <option value="{{this.donor_id}}">{{this.donor_id}}</option>
+    {{/each}}
+  </select> 
+
+  <label for="update_donor_name">Update donor name: </label>
+  <input type="text" name="update_donor_name" id="update_donor_name">
+ 
+  <label for="update_donor_email">Update donor email: </label>
+  <input type="text" name="update_donor_email" id="update_donor_email">  
+ 
+  <input type="submit" value="Update">
+  <a href='/'><input type="button" value="Cancel"></a>
+</form>
+
+<script src="./js/update_donor.js"></script>
+<br>
+<br>
+
+
